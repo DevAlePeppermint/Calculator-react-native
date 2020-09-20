@@ -1,12 +1,34 @@
 
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default class App extends Component {
 
 
 
   render() {
+
+
+    let rows =[]
+    let numb = [[1,2,3], [4,5,6], [7,8,9], [0,0,0]]
+    for (let i=0; i < 4; i++) {
+      let row = []
+      for (let j = 0; j < 3; j++) {
+
+        row.push(<TouchableOpacity style={styles.btn}><Text style={styles.btnText}>{numb[i][j]}</Text></TouchableOpacity>)
+      }
+
+      rows.push(<View style = {styles.row}>{row}</View>)
+
+    }
+
+    let operations = ['+', '-', '*', '/']
+    let ops=[]
+    for(let i = 0; i<4; i++) {
+
+        ops.push(<TouchableOpacity style={styles.btn}><Text style={[styles.btnText, styles.operationTxtColor]}>{operations[i]}</Text></TouchableOpacity>)
+    }
+
 
     return (
       <View style={styles.container}>
@@ -23,39 +45,14 @@ export default class App extends Component {
         <View style={styles.buttons}>
 
           <View style={styles.numbers}>
-            <View style={styles.row}>
-              <Button title="0" />
-              <Button title="0" />
-              <Button title="0" />
-            </View>
 
-            <View style={styles.row}>
-              <Button title="0" />
-              <Button title="0" />
-              <Button title="0" />
-            </View>
-
-            <View style={styles.row}>
-              <Button title="0" />
-              <Button title="0" />
-              <Button title="0" />
-            </View>
-
-            <View style={styles.row}>
-              <Button title="0" />
-              <Button title="0" />
-              <Button title="0" />
-            </View>
-
-
+            {rows}
+  
           </View>
 
 
           <View style={styles.operations}>
-          <Button title="+" />
-          <Button title="-" />
-          <Button title="/" />
-          <Button title="*" />
+            {ops}
           </View>
 
         </View>
@@ -98,8 +95,21 @@ const styles = StyleSheet.create({
   buttons:{
     flex: 7,
     flexDirection: 'row',
-    
+    },
+
+  btn:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:"center",
+    alignSelf:'stretch'
   },
+  btnText:{
+    fontSize: 30
+  },
+  operationTxtColor:{
+    color:'white',
+  },
+
   numbers:{
     flex: 3,
     backgroundColor: 'yellow'
