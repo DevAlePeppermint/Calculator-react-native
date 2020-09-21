@@ -156,20 +156,20 @@ const styles = StyleSheet.create({
     color: 'grey'
   },
   calculationText:{
-    fontSize: 50,
+    fontSize: 60,
     textAlign: 'right',
-    color: 'grey'
+    color: 'black'
   },
   result: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: 'white',
     justifyContent:"center",
     paddingRight:20,
 
   },
   calculation:{
     flex: 2,
-    backgroundColor: 'green',
+    backgroundColor: 'white',
     justifyContent:"center",
     paddingRight:20,
 
@@ -177,13 +177,14 @@ const styles = StyleSheet.create({
   buttons:{
     flex: 7,
     flexDirection: 'row',
+
     },
 
   btn:{
     flex:1,
     justifyContent:'center',
     alignItems:"center",
-    alignSelf:'stretch'
+    alignSelf:'stretch',
   },
   btnText:{
     fontSize: 30
@@ -194,7 +195,8 @@ const styles = StyleSheet.create({
 
   numbers:{
     flex: 3,
-    backgroundColor: 'yellow'
+    backgroundColor: '#fff100',
+    borderRadius: 10,
   },
   row:{
     flexDirection: 'row',
@@ -206,7 +208,8 @@ const styles = StyleSheet.create({
   operations:{
     flex: 1,
     justifyContent: 'space-around',
-    backgroundColor: 'blue'
+    backgroundColor: 'black',
+    borderRadius: 10,
 
   }
 
