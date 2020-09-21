@@ -4,43 +4,125 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default class App extends Component {
 
+  constructor(){
+    super ()
+    this.state ={
+      resultText:"",
+      calculationText:""
+    }
 
+    this.operations = ['DEL','+', '-', '*', '/']
+
+  }
+
+  calculateResult() {
+    const text = this.state.resultText
+    console.log(eval(text))
+      this.setState({
+        calculationText: eval(text)
+      })
+
+  }
+
+  validate(){
+      const text = this.state.resultText
+        switch(text.slice(-1)) {
+          case '+':
+          case '-':
+          case '*':
+          case '/':
+            return false
+        }
+      return true
+  } 
+
+
+  buttonPressed(text){
+    //console.log(text)
+
+    if(text == '='){
+      return this.validate() && this.calculateResult()
+    }
+
+    this.setState({
+      resultText: this.state.resultText+text
+    })
+
+
+  }
+
+  operate(operation) {
+    switch(operation){
+      case 'DEL':  
+        let text = this.state.resultText.split('')
+        text.pop()
+        text.join('')
+        this.setState({
+            resultText: text.join('')
+        })
+        break;
+      
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+          const lastChar = this.state.resultText.split('').pop()
+
+          if(this.operations.indexOf(lastChar) > 0) return
+
+          if(this.state.text == "") return
+
+          this.setState({
+            resultText: this.state.resultText + operation
+
+          })
+      
+
+
+    }
+  }
 
   render() {
 
 
-    let rows =[]
-    let numb = [[1,2,3], [4,5,6], [7,8,9], [0,0,0]]
+    let rows = []
+    let numb = [[1,2,3], [4,5,6], [7,8,9], [',',0,'=']]
     for (let i=0; i < 4; i++) {
       let row = []
       for (let j = 0; j < 3; j++) {
 
-        row.push(<TouchableOpacity style={styles.btn}><Text style={styles.btnText}>{numb[i][j]}</Text></TouchableOpacity>)
+        row.push(
+        <TouchableOpacity key={numb[i][j]} onPress={() => this.buttonPressed(numb[i][j]) } style={styles.btn}> 
+          <Text style={styles.btnText}>{numb[i][j]}</Text>
+        </TouchableOpacity>)
       }
 
-      rows.push(<View style = {styles.row}>{row}</View>)
+      rows.push(<View key={i} style = {styles.row}>{row}</View>)
 
     }
 
-    let operations = ['+', '-', '*', '/']
+    //this.operations = ['D','+', '-', '*', '/']
     let ops=[]
-    for(let i = 0; i<4; i++) {
+    for(let i = 0; i<5; i++) {
 
-        ops.push(<TouchableOpacity style={styles.btn}><Text style={[styles.btnText, styles.operationTxtColor]}>{operations[i]}</Text></TouchableOpacity>)
+        ops.push(
+          <TouchableOpacity key={this.operations[i]} style={styles.btn} onPress ={() => this.operate(this.operations[i])}> 
+            <Text style={[styles.btnText, styles.operationTxtColor]}>{this.operations[i]}
+            </Text>
+          </TouchableOpacity>)
     }
 
 
     return (
       <View style={styles.container}>
 
-        <View style={styles.result}>
-          <Text style={styles.resultText}>121</Text>
-        </View>
-
         <View style={styles.calculation}>
-          <Text style={styles.calculationText}>30+9</Text>
+          <Text style={styles.calculationText}>{this.state.calculationText}</Text>
         </View>
 
+        <View style={styles.result}>
+          <Text style={styles.resultText}>{this.state.resultText}</Text>
+        </View>
         
         <View style={styles.buttons}>
 
@@ -69,24 +151,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   resultText:{
-    fontSize: 50,
-    textAlign: 'right',
-    color: 'grey'
-  },
-  calculationText:{
     fontSize: 30,
     textAlign: 'right',
     color: 'grey'
   },
+  calculationText:{
+    fontSize: 50,
+    textAlign: 'right',
+    color: 'grey'
+  },
   result: {
-    flex: 2,
+    flex: 1,
     backgroundColor: 'red',
     justifyContent:"center",
     paddingRight:20,
 
   },
   calculation:{
-    flex: 1,
+    flex: 2,
     backgroundColor: 'green',
     justifyContent:"center",
     paddingRight:20,
